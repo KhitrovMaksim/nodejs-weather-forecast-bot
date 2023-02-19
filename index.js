@@ -3,6 +3,8 @@ const { TOKEN_BOT, TOKEN_WEATHER_API } = require('./config');
 const logger = require('./logger');
 const openWeatherMapApiUrlBuilder = require('./lib/openWeatherMapApiUrlBuilder');
 const httpsGetJson = require('./lib/httpsGetJson');
+const openWeatherMapApiResponseParser = require('./lib/openWeatherMapApiResponseParser');
+const serializerArrayOfObjects = require('./lib/serializerArrayOfObjects');
 
 const bot = new TelegramApi(TOKEN_BOT, { polling: true });
 
@@ -30,8 +32,14 @@ const start = () => {
     const json = await httpsGetJson(url).catch((error) => {
       logger.error(`Error occurred while sending request. ${error}`);
     });
+    const parsedJson = openWeatherMapApiResponseParser(json);
 
-    return bot.sendMessage(chatId, JSON.stringify(json));
+    if (parsedJson.error) {
+      logger.error(`Callback query data error: ${parsedJson.error}`);
+      return bot.sendMessage(chatId, 'Response error');
+    }
+
+    return bot.sendMessage(chatId, serializerArrayOfObjects(parsedJson.weather));
   });
 };
 
