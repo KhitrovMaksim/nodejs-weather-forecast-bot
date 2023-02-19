@@ -1,6 +1,8 @@
 const TelegramApi = require('node-telegram-bot-api');
-const { TOKEN_BOT } = require('./config');
+const { TOKEN_BOT, TOKEN_WEATHER_API } = require('./config');
 const logger = require('./logger');
+const openWeatherMapApiUrlBuilder = require('./lib/openWeatherMapApiUrlBuilder');
+const httpsGetJson = require('./lib/httpsGetJson');
 
 const bot = new TelegramApi(TOKEN_BOT, { polling: true });
 
@@ -24,7 +26,12 @@ const start = () => {
 
     logger.info(`Latitude: ${latitude}; Longitude: ${longitude}`);
 
-    return bot.sendMessage(chatId, 'Hi! Please, send me your geo!');
+    const url = openWeatherMapApiUrlBuilder(TOKEN_WEATHER_API, latitude, longitude);
+    const json = await httpsGetJson(url).catch((error) => {
+      logger.error(`Error occurred while sending request. ${error}`);
+    });
+
+    return bot.sendMessage(chatId, JSON.stringify(json));
   });
 };
 
