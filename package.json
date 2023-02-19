@@ -1,0 +1,50 @@
+{
+  "name": "nodejs-weather-forecast-bot",
+  "version": "1.0.0",
+  "description": "3.4 Weather forecast bot",
+  "author": "Maksim Khitrov <khitrov.maks@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "nodejs",
+    "foxminded",
+    "telegram",
+    "api",
+    "bot",
+    "env",
+    "weather",
+    "forecast"
+  ],
+  "homepage": "http://git.foxminded.ua/foxstudent103641/nodejs-weather-forecast-bot",
+  "repository": {
+    "type": "git",
+    "url": "http://git.foxminded.ua/foxstudent103641/nodejs-weather-forecast-bot.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "lint": "eslint . && prettier -c \"**/*.js\"",
+    "format": "eslint . --fix && prettier --write \"**/*.js\"",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.61.0",
+    "pino": "^8.10.0",
+    "pino-pretty": "^9.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/preset-env": "^7.20.2",
+    "eslint": "8.22.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.1.2",
+    "nodemon": "^2.0.20",
+    "prettier": "2.8.3"
+  }
+}
